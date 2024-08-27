@@ -14,6 +14,9 @@ int up, left, down, right;
 int bu, bl, bd, br;
 
 int direcao = -1;
+/*     0           
+     3 d 1          
+       2      */
 boolean atirar = false;
 
 boolean tem_chave = false;
