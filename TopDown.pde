@@ -35,6 +35,7 @@ void setup() {
   }
 
   entidades = new ArrayList();
+  // criar o player
   entidades.add( new Entidade( 121, 1, 1 ) );
 
   XML mapa = loadXML("mapa.xml");
@@ -48,7 +49,8 @@ void setup() {
 
 void draw() {
   background(0);
-
+  
+  // desenhar o mapa
   scale(2);
   for (int j = 0; j < 20; j++) {
     int J = j * 16;
@@ -56,14 +58,17 @@ void draw() {
       image( tiles[ MAP[i][j] ], i*16, J );
     }
   }
-
+  
   if ( atirar ) {
+    //colocar o novo tiro na lista de entidades
     entidades.add( new Tiro( 663 + direcao, entidades.get(0).x, entidades.get(0).y, direcao ) );
     atirar = false;
   }
-
+  
+  //player da o passinho
   entidades.get(0).move( up, left, down, right, MAP );
-
+  
+  // esses latches ajudam um pouco no 'gamefeel'...
   if ( bu < 0 ) up    = 0;
   if ( bd < 0 ) down  = 0;
   if ( bl < 0 ) left  = 0;
@@ -73,7 +78,8 @@ void draw() {
   if ( down  > 0 && bd == 0 ) bd = 1;
   if ( left  > 0 && bl == 0 ) bl = 1;
   if ( right > 0 && br == 0 ) br = 1;
-
+  
+  // nesses loops estamos detectando as colisões dos tiros com os inimigos
   for (int i = entidades.size()-1; i >= 1; i--) {
     if ( entidades.get(i) instanceof Tiro ) {
       for (int j = entidades.size()-1; j >= 1; j--) {
@@ -94,7 +100,8 @@ void draw() {
       }
     }
   }
-
+  
+  // e aqui detectamos as colisões do player com os itens com os quais ele pode interagir.
   for (int i = entidades.size()-1; i >= 1; i--) {
     if ( entidades.get(0).x == entidades.get(i).x &&
          entidades.get(0).y == entidades.get(i).y ) {
@@ -118,7 +125,9 @@ void draw() {
       }
     }
   }
-
+  
+  //aqui damos o 'step' e desenhamos todas as entidades
+   // incluido o player, inimigos, tiros, chave, etc
   for (int i = entidades.size()-1; i >= 0; i--) {
     if ( entidades.get(i).step( MAP ) ) {
       entidades.get(i).display( tiles );
