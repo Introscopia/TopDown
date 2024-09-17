@@ -48,7 +48,7 @@ void setup() {
 	objectgroups = mapa.getChildren("objectgroup");
 	println("mapa.xml has", layers.length, "layers, and", objectgroups.length, "objectgroups." );
 	MAP = new int [E][E];
-	load_layer( 0 );
+	load_map( 0 );
 
 	noSmooth();
 	frameRate(8);
@@ -128,6 +128,22 @@ void draw() {
 					}
 					break;
 			}
+
+      if( entidades.get(i) instanceof Portal ){
+        XML mapa = loadXML( entidades.get(i).get_string()+".xml" );
+        println( "indo para novo mapa: ", entidades.get(i).get_string() );
+        
+        for (int j = entidades.size()-1; j >= 1; j--){
+          entidades.remove(j);
+        }
+        
+        layers = mapa.getChildren("layer");
+        objectgroups = mapa.getChildren("objectgroup");
+        println("mapa.xml has", layers.length, "layers, and", objectgroups.length, "objectgroups." );
+        MAP = new int [E][E];
+        load_map( 0 );
+        i = 0;        
+      }
 		}
 	}
 	
@@ -143,7 +159,7 @@ void draw() {
 		}
 	}
 
-	//display_text( "Texto\ntexto\n12345", 1, 1 );
+	//display_text( "Texto * 12345$", 1, 1 );
 }
 
 
@@ -197,7 +213,7 @@ void keyReleased() {
 //const SDL_RendererFlip flips [] = { SDL_FLIP_NONE, SDL_FLIP_HORIZONTAL, SDL_FLIP_VERTICAL, SDL_FLIP_NONE, SDL_FLIP_HORIZONTAL, SDL_FLIP_NONE, SDL_FLIP_NONE, SDL_FLIP_HORIZONTAL };
 //const byte flags [] =               { 0,             0,                   1,                 0,             2,                   0,             3,             0  };
 
-void load_layer( int L ) {
+void load_map( int L ){
 	println( "Loading layer "+layers[L].getString("name") );
 	String data = layers[L].getContent();
 	String[] spl = split(data, ',');
@@ -259,7 +275,9 @@ void load_layer( int L ) {
 				}
 			}
 			else{//outras propriedades...
-
+        if( prop[p].getString("name").equals("portal") ){
+          entidades.add( new Portal( tID, x, y, prop[p].getString("value") ) );
+        }
 			}
 		}
 	}
@@ -283,9 +301,10 @@ void display_text( String text, int x, int y ){
 		else if( str.charAt(i) == ':' ) tID = 957;
 		else if( str.charAt(i) == '.' ) tID = 958;
 		else if( str.charAt(i) == '%' ) tID = 959;
-		else if( str.charAt(i) == '$' ) tID = 915;
+		else if( str.charAt(i) == '$' ) tID = 809;//915;
 		else if( str.charAt(i) == '!' ) tID = 819;
 		else if( str.charAt(i) == '?' ) tID = 821;
+    else if( str.charAt(i) == '*' ) tID = 335;
 		else if( str.charAt(i) == '\n'){
 			y += 1;
 			x = ox;

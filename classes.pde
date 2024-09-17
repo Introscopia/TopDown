@@ -20,6 +20,8 @@ class Entidade{
 
 	void signal( int s ){} //função pra enviarmos "sinais" pras entidades
 
+  String get_string(){ return null; }
+
   boolean mesma_posicao( Entidade E ){
     return ( x == E.x && y == E.y );
   }
@@ -126,4 +128,13 @@ class SFX extends Entidade{
 			return false;
 		}
 	}
+}
+
+class Portal extends Entidade{
+  String destino;
+  Portal( int tID, int x, int y, String dest ){
+    super( tID, x, y, false );
+    destino = dest;
+  }
+  String get_string(){ return destino; }
 }

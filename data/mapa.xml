@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#000000" nextlayerid="4" nextobjectid="14">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#000000" nextlayerid="4" nextobjectid="17">
  <tileset firstgid="1" source="Kenney 1-bit.tsx"/>
  <layer id="1" name="Mapa" width="20" height="20">
   <data encoding="csv">
@@ -9,19 +9,19 @@
 555,1,1,69,1,1,555,555,555,555,555,555,555,587,555,555,555,1,1,555,
 555,1,1,1,1,1,555,1,1,1,1,1,673,555,1,1,555,1,1,555,
 555,1,0,1,1,1,555,1,1,1,0,1,674,555,1,0,555,1,1,555,
-587,555,555,555,555,555,555,1,1,508,1,1,675,555,1,1,555,1,1,555,
+587,0,555,555,555,555,555,1,1,508,1,1,675,555,1,1,555,1,1,555,
 555,1,1,1,1,1,1,1,1,555,1,1,645,555,1,1,555,1,1,555,
 555,0,1,1,1,1,35,1,1,555,1,1,679,555,1,1,555,1,35,555,
 555,1,1,508,555,555,555,555,555,587,1,1,1,555,1,1,555,1,1,555,
 555,1,1,1,1,1,1,1,1,555,1,35,1,555,1,1,555,1,1,555,
 555,1,1,35,1,1,1,1,0,555,1,1,1,508,1,1,508,1,1,555,
-587,555,555,555,555,555,555,1,1,555,1,1,1,1,1,1,1,1,1,555,
+587,0,555,555,555,555,555,1,1,555,1,1,1,1,1,1,1,1,1,555,
 555,1,1,1,1,0,555,1,1,555,1,1,1,1,1,1,1,0,1,555,
 555,1,1,1,485,1,555,1,1,555,555,555,555,587,555,555,555,555,555,587,
 555,1,0,1,1,1,555,1,35,1,1,1,1,555,1,1,1,1,1,555,
 555,1,1,508,555,555,555,1,1,35,35,1,1,555,1,1,0,1,1,555,
 555,1,1,1,1,1,1,1,1,1,1,35,1,0,1,1,1,1,1,555,
-555,1,1,1,1,1,1,0,0,1,1,1,1,555,1,1,1,1,195,555,
+555,1,1,1,1,1,1,0,0,1,1,1,1,555,1,1,1,1,0,555,
 555,555,555,555,555,555,555,555,555,555,555,555,555,587,555,555,555,555,555,555
 </data>
  </layer>
@@ -58,7 +58,7 @@
     <property name="tipo" value="inimigo"/>
    </properties>
   </object>
-  <object id="10" gid="318" x="176" y="208" width="16" height="16">
+  <object id="10" gid="313" x="176" y="208" width="16" height="16">
    <properties>
     <property name="tipo" value="inimigo"/>
    </properties>
@@ -76,6 +76,11 @@
   <object id="13" gid="318" x="32" y="240" width="16" height="16">
    <properties>
     <property name="tipo" value="inimigo"/>
+   </properties>
+  </object>
+  <object id="16" gid="196" x="288" y="304" width="16" height="16">
+   <properties>
+    <property name="portal" value="mapa2"/>
    </properties>
   </object>
  </objectgroup>
