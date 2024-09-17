@@ -35,7 +35,7 @@ void setup() {
 
 	entidades = new ArrayList();
 	// criar o player
-	entidades.add( new Entidade( 121, 1, 1 ) );
+	entidades.add( new Entidade( 121, 1, 1, true ) );
 
 	tipos_de_entidade = new HashMap<String,Integer>();
 	tipos_de_entidade.put(   "arma", 1);
@@ -72,6 +72,8 @@ void draw() {
 		atirar = false;
 	}
 	
+  int px = entidades.get(0).x;
+  int py = entidades.get(0).y;
 	//player da o passinho
 	entidades.get(0).move( up, left, down, right, MAP );
 	
@@ -87,12 +89,11 @@ void draw() {
 	if ( right > 0 && br == 0 ) br = 1;
 	
 	// nesses loops estamos detectando as colisões dos tiros com os inimigos
-	for (int i = entidades.size()-1; i >= 1; i--){
-		if ( entidades.get(i) instanceof Tiro ) {
-			for (int j = entidades.size()-1; j >= 1; j--){
-				if ( entidades.get(j) instanceof Inimigo ){
-					if ( entidades.get(i).x == entidades.get(j).x &&
-						 entidades.get(i).y == entidades.get(j).y ) {
+	for(int i = entidades.size()-1; i >= 1; i--){
+		if( entidades.get(i) instanceof Tiro ) {
+			for(int j = entidades.size()-1; j >= 1; j--){
+				if( entidades.get(j) instanceof Inimigo ){
+					if( entidades.get(i).mesma_posicao(entidades.get(j)) ) {
 						entidades.get(j).signal( -99 );
 						entidades.remove(i);
 						i--;
@@ -105,8 +106,12 @@ void draw() {
 	
 	// e aqui detectamos as colisões do player com os itens com os quais ele pode interagir.
 	for (int i = entidades.size()-1; i >= 1; i--) {
-		if ( entidades.get(0).x == entidades.get(i).x &&
-			 entidades.get(0).y == entidades.get(i).y ){
+		if ( entidades.get(0).mesma_posicao(entidades.get(i)) ){
+  
+      if( entidades.get(i).solido ){
+        entidades.get(0).x = px;
+        entidades.get(0).y = py;
+      }
 
 			switch( entidades.get(i).tID ) {
 				case 753:// CHAVE
@@ -120,8 +125,6 @@ void draw() {
 				case 288:// PORTA
 					if ( tem_chave ) {
 						entidades.get(i).signal( 222 );
-					} else {
-						entidades.get(0).x -= 1;
 					}
 					break;
 			}
@@ -211,7 +214,6 @@ void load_layer( int L ) {
 			} else{
 				MAP[i][j] = N-1;
 			}
-
 			if ( MAP[i][j] < 0 ) MAP[i][j] = 0;
 
 			/*for ( int e = 0; e < ent_ids.length; e++ ) {
@@ -243,10 +245,10 @@ void load_layer( int L ) {
 				//println( "tipo:", tipo );
 				switch( tipo ){
 					case 1: // arma
-						entidades.add( new Entidade( tID, x, y ) );
+						entidades.add( new Entidade( tID, x, y, false ) );
 						break;
 					case 2: // chave
-						entidades.add( new Entidade( tID, x, y ) );
+						entidades.add( new Entidade( tID, x, y, false ) );
 						break;
 					case 3: // porta
 						entidades.add( new Porta( tID, x, y ) );

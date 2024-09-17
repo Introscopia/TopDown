@@ -1,10 +1,12 @@
 class Entidade{
 	int tID;
 	int x,y;
-	Entidade( int tID, int x, int y ){
+  boolean solido;
+	Entidade( int tID, int x, int y, boolean solido ){
 		this.tID = tID;
 		this.x = x;
 		this.y = y;
+    this.solido = solido;
 	}
 	void display( PImage[] tiles ){
 		image( tiles[ tID ], x*16, y*16 );
@@ -17,6 +19,10 @@ class Entidade{
 	void morri(){} //função executada antes da entidade ser removida do jogo.
 
 	void signal( int s ){} //função pra enviarmos "sinais" pras entidades
+
+  boolean mesma_posicao( Entidade E ){
+    return ( x == E.x && y == E.y );
+  }
 
 	void move( int up, int left, int down, int right, int[][] MAP ){
 		if( up + down + left + right > 0 ){
@@ -51,7 +57,7 @@ class Entidade{
 class Tiro extends Entidade{
 	int dir;
 	Tiro( int tID, int x, int y, int dir ){
-		super( tID, x, y );
+		super( tID, x, y, false );
 		this.dir = dir;
 	}
 	boolean step(){
@@ -72,7 +78,7 @@ int[] explosao = { 413, 412, 412, 414, 756, 414, 756, 414, 756 };
 class Inimigo extends Entidade{
 	boolean vivo;
 	Inimigo( int tID, int x, int y ){
-		super( tID, x, y );
+		super( tID, x, y, true );
 		vivo = true;
 	}
 	boolean step(){
@@ -91,11 +97,12 @@ class Inimigo extends Entidade{
 
 class Porta extends Entidade{
 	Porta( int tID, int x, int y ){
-		super( tID, x, y );
+		super( tID, x, y, true );
 	}
 	void signal( int s ){// quando a porta abre ela muda o seu tile para a porta aberta.
 		if( s == 222 ){
 			tID = 290;
+      solido = false;
 		}
 	}
 }
@@ -104,7 +111,7 @@ class SFX extends Entidade{
 	int[] animacao;
 	int idade;
 	SFX( int x, int y, int[] anim ){
-		super( 0, x, y );
+		super( 0, x, y, false );
 		animacao = anim;
 		idade = 0;
 	}
